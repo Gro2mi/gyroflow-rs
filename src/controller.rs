@@ -531,7 +531,7 @@ impl Controller {
         let trim_start = self.stabilizer.params.read().trim_start * dur_ms / 1000.0;
         let trim_end = self.stabilizer.params.read().trim_end * dur_ms / 1000.0;
         if let Some(mut optsync) = core::synchronization::optimsync::OptimSync::new(&self.stabilizer.gyro.read()) {
-            let s: String = optsync.run(target_sync_points, trim_start, trim_end).iter().map(|x| x / dur_ms).map(|x| x.to_string()).join(";").chars().collect();
+            let s: String = optsync.run(target_sync_points, trim_start, trim_end, 0.02, 2.5).iter().map(|x| x / dur_ms).map(|x| x.to_string()).join(";").chars().collect();
             QString::from(s)
         } else {
             QString::default()
